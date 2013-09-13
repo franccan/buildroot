@@ -87,8 +87,44 @@ MAKEOVERRIDES =
 override O:=$(O)
 CONFIG_DIR:=$(O)
 # we need to pass O= everywhere we call back into the toplevel makefile
-EXTRAMAKEARGS = O=$(O)
+EXTRAMAKEARGS += O=$(O)
 NEED_WRAPPER=y
+endif
+
+# Handling of BR2_EXTERNAL. We are handling three cases here:
+#
+#  (Case 1) BR2_EXTERNAL is defined in the command line, but has an
+#           empty value. That's an indication that the user wants to
+#           remove the BR2_EXTERNAL value. So we use the
+#           dummy-external directory as BR2_EXTERNAL and remove the
+#           .br-external file.
+#  (Case 2) BR2_EXTERNAL is defined in the command line, and has a
+#           non-empty value. That's an indication that the user wants
+#           to use the provided location as the BR2_EXTERNAL. We
+#           verify that the location exists, and if it's the case,
+#           store it in .br-external.
+#  (Case 3) BR2_EXTERNAL isn't defined in the command line. We load
+#           the value from .br-external, verify that it exists and
+#           then use it.
+
+ifeq ($(origin BR2_EXTERNAL),command line)
+ifeq ($(BR2_EXTERNAL),) # Case 1
+override BR2_EXTERNAL := $(TOPDIR)/support/dummy-external/
+$(shell rm -f $(O)/.br-external)
+else # Case 2
+ifeq ($(wildcard $(BR2_EXTERNAL)),)
+$(error "The specified BR2_EXTERNAL '$(BR2_EXTERNAL)' location doesn't exist")
+endif
+override BR2_EXTERNAL := $(realpath $(BR2_EXTERNAL))
+BR2_EXTERNAL_USED = y
+$(shell echo $(BR2_EXTERNAL) > $(O)/.br-external)
+endif
+else # Case 3
+override BR2_EXTERNAL := $(shell test -f $(O)/.br-external && cat $(O)/.br-external)
+ifeq ($(wildcard $(BR2_EXTERNAL)),)
+$(error "The specified BR2_EXTERNAL '$(BR2_EXTERNAL)' location doesn't exist")
+endif
+BR2_EXTERNAL_USED = y
 endif
 
 # bash prints the name of the directory on 'cd <dir>' if CDPATH is
@@ -619,7 +655,8 @@ COMMON_CONFIG_ENV = \
 	KCONFIG_AUTOCONFIG=$(BUILD_DIR)/buildroot-config/auto.conf \
 	KCONFIG_AUTOHEADER=$(BUILD_DIR)/buildroot-config/autoconf.h \
 	KCONFIG_TRISTATE=$(BUILD_DIR)/buildroot-config/tristate.config \
-	BUILDROOT_CONFIG=$(BUILDROOT_CONFIG)
+	BUILDROOT_CONFIG=$(BUILDROOT_CONFIG) \
+	BR2_EXTERNAL=$(BR2_EXTERNAL)
 
 xconfig: $(BUILD_DIR)/buildroot-config/qconf outputmakefile
 	@mkdir -p $(BUILD_DIR)/buildroot-config
