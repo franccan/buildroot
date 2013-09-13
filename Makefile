@@ -365,6 +365,10 @@ include boot/common.mk
 include linux/linux.mk
 include system/system.mk
 
+ifeq ($(BR2_EXTERNAL_USED),y)
+include $(sort $(wildcard $(BR2_EXTERNAL)/package/*/*.mk))
+endif
+
 TARGETS+=target-finalize
 
 ifeq ($(BR2_ENABLE_LOCALE_PURGE),y)

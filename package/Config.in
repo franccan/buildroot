@@ -997,4 +997,6 @@ source "package/vim/Config.in"
 endif
 endmenu
 
+source "$BR2_EXTERNAL/package/Config.in"
+
 endmenu
