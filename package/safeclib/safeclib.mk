@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-SAFECLIB_VERSION = v09102017
-SAFECLIB_SITE = $(call github,rurban,safeclib,$(SAFECLIB_VERSION))
+SAFECLIB_VERSION = 09102017
+SAFECLIB_SITE = $(call github,rurban,safeclib,v$(SAFECLIB_VERSION))
 SAFECLIB_LICENSE = MIT
 SAFECLIB_LICENSE_FILES = COPYING
 SAFECLIB_INSTALL_STAGING = YES

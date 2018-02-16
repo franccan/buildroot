@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-LIBRTLSDR_VERSION = v0.5.3
-LIBRTLSDR_SITE = $(call github,steve-m,librtlsdr,$(LIBRTLSDR_VERSION))
+LIBRTLSDR_VERSION = 0.5.3
+LIBRTLSDR_SITE = $(call github,steve-m,librtlsdr,v$(LIBRTLSDR_VERSION))
 LIBRTLSDR_LICENSE = GPL-2.0+
 LIBRTLSDR_LICENSE_FILES = COPYING
 LIBRTLSDR_INSTALL_STAGING = YES

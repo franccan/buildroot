@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-OPENTRACING_CPP_VERSION = v1.2.0
-OPENTRACING_CPP_SITE = $(call github,opentracing,opentracing-cpp,$(OPENTRACING_CPP_VERSION))
+OPENTRACING_CPP_VERSION = 1.2.0
+OPENTRACING_CPP_SITE = $(call github,opentracing,opentracing-cpp,v$(OPENTRACING_CPP_VERSION))
 OPENTRACING_CPP_LICENSE = MIT
 OPENTRACING_CPP_LICENSE_FILES = COPYING
 

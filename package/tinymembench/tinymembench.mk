@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-TINYMEMBENCH_VERSION = v0.3
-TINYMEMBENCH_SITE = $(call github,ssvb,tinymembench,$(TINYMEMBENCH_VERSION))
+TINYMEMBENCH_VERSION = 0.3
+TINYMEMBENCH_SITE = $(call github,ssvb,tinymembench,v$(TINYMEMBENCH_VERSION))
 TINYMEMBENCH_LICENSE = MIT
 TINYMEMBENCH_LICENSE_FILES = main.c
 

@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-SQUEEZELITE_VERSION = v1.8
-SQUEEZELITE_SITE = $(call github,robadenshi,squeezelite,$(SQUEEZELITE_VERSION))
+SQUEEZELITE_VERSION = 1.8
+SQUEEZELITE_SITE = $(call github,robadenshi,squeezelite,v$(SQUEEZELITE_VERSION))
 SQUEEZELITE_LICENSE = GPL-3.0
 SQUEEZELITE_LICENSE_FILES = LICENSE.txt
 SQUEEZELITE_DEPENDENCIES = alsa-lib flac libmad libvorbis faad2 mpg123

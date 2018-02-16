@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-SOLARUS_VERSION = v1.5.3
-SOLARUS_SITE = $(call github,solarus-games,solarus,$(SOLARUS_VERSION))
+SOLARUS_VERSION = 1.5.3
+SOLARUS_SITE = $(call github,solarus-games,solarus,v$(SOLARUS_VERSION))
 
 SOLARUS_LICENSE = GPL-3.0 (code), CC-BY-SA-4.0 (Solarus logos and icons), \
 	CC-BY-SA-3.0 (GUI icons)
