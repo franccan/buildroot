@@ -4,9 +4,8 @@
 #
 ################################################################################
 
-MONGODB_VERSION_BASE = 3.3.4
-MONGODB_VERSION = r$(MONGODB_VERSION_BASE)
-MONGODB_SITE = $(call github,mongodb,mongo,$(MONGODB_VERSION))
+MONGODB_VERSION = 3.3.4
+MONGODB_SITE = $(call github,mongodb,mongo,r$(MONGODB_VERSION))
 
 MONGODB_LICENSE = AGPL-3.0, Apache-2.0
 MONGODB_LICENSE_FILES = GNU-AGPL-3.0.txt APACHE-2.0.txt
@@ -21,7 +20,7 @@ MONGODB_SCONS_ENV = CC="$(TARGET_CC)" CXX="$(TARGET_CXX)" \
 MONGODB_SCONS_OPTS = --disable-warnings-as-errors
 
 # need to pass mongo version when not building from git repo
-MONGODB_SCONS_OPTS += MONGO_VERSION=$(MONGODB_VERSION_BASE)-
+MONGODB_SCONS_OPTS += MONGO_VERSION=$(MONGODB_VERSION)-
 
 # WiredTiger database storage engine only supported on 64 bits
 ifeq ($(BR2_ARCH_IS_64),y)

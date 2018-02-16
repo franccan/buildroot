@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-LIBNFS_VERSION = libnfs-2.0.0
-LIBNFS_SITE = $(call github,sahlberg,libnfs,$(LIBNFS_VERSION))
+LIBNFS_VERSION = 2.0.0
+LIBNFS_SITE = $(call github,sahlberg,libnfs,libnfs-$(LIBNFS_VERSION))
 LIBNFS_INSTALL_STAGING = YES
 LIBNFS_AUTORECONF = YES
 LIBNFS_LICENSE = LGPL-2.1+
