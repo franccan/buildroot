@@ -4,8 +4,9 @@
 #
 ################################################################################
 
-SSLH_VERSION = v1.18
+SSLH_VERSION = 1.18
 SSLH_SITE = http://www.rutschle.net/tech/sslh
+SSLH_SOURCE = sslh-v$(SSLH_VERSION).tar.gz
 SSLH_LICENSE = GPL-2.0+
 SSLH_LICENSE_FILES = COPYING
 

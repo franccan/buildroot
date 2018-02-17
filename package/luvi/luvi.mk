@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-LUVI_VERSION = v2.7.6
-LUVI_SOURCE = luvi-src-$(LUVI_VERSION).tar.gz
+LUVI_VERSION = 2.7.6
+LUVI_SOURCE = luvi-src-v$(LUVI_VERSION).tar.gz
 LUVI_SITE = https://github.com/luvit/luvi/releases/download/$(LUVI_VERSION)
 LUVI_LICENSE = Apache-2.0
 LUVI_LICENSE_FILES = LICENSE.txt
