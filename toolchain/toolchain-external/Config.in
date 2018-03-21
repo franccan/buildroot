@@ -36,6 +36,9 @@ source "toolchain/toolchain-external/toolchain-external-codesourcery-niosII/Conf
 # x86_64
 source "toolchain/toolchain-external/toolchain-external-codesourcery-amd64/Config.in"
 
+# Various architectures
+source "toolchain/toolchain-external/toolchain-external-bootlin/Config.in"
+
 # Kept last, so it remains the non-default choice, unless there isn't
 # any available toolchain profile for the currently selected
 # architecture.
@@ -129,6 +132,9 @@ source "toolchain/toolchain-external/toolchain-external-codesourcery-niosII/Conf
 
 # x86_64
 source "toolchain/toolchain-external/toolchain-external-codesourcery-amd64/Config.in.options"
+
+# Bootlin
+source "toolchain/toolchain-external/toolchain-external-bootlin/Config.in.options"
 
 # Custom toolchains
 source "toolchain/toolchain-external/toolchain-external-custom/Config.in.options"
