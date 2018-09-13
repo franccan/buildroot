@@ -190,10 +190,16 @@ endif
 MESA3D_CONF_OPTS += \
 	--with-platforms=$(subst $(space),$(comma),$(MESA3D_PLATFORMS))
 
+ifeq ($(BR2_PACKAGE_MESA3D_GBM),y)
+MESA3D_PROVIDES += libgbm
+MESA3D_CONF_OPTS += --enable-gbm
+else
+MESA3D_CONF_OPTS += --disable-gbm
+endif
+
 ifeq ($(BR2_PACKAGE_MESA3D_OPENGL_EGL),y)
 MESA3D_PROVIDES += libegl
 MESA3D_CONF_OPTS += \
-	--enable-gbm \
 	--enable-egl
 else
 MESA3D_CONF_OPTS += \
