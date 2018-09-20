@@ -24,44 +24,16 @@ endef
 
 define QT5DECLARATIVE_BUILD_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)
+	$(call QT5_FIXUP_MAKEFILES,$(@D))
 endef
 
 define QT5DECLARATIVE_INSTALL_STAGING_CMDS
-	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) install
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) INSTALL_ROOT=$(STAGING_DIR) install
 	$(QT5_LA_PRL_FILES_FIXUP)
 endef
 
-ifeq ($(BR2_STATIC_LIBS),)
-
-ifeq ($(BR2_PACKAGE_QT5DECLARATIVE_QUICK),y)
-define QT5DECLARATIVE_INSTALL_TARGET_QUICK_LIBS
-	cp -dpf $(STAGING_DIR)/usr/lib/libQt5Quick*.so.* $(TARGET_DIR)/usr/lib
-endef
-define QT5DECLARATIVE_INSTALL_TARGET_QUICK_EXAMPLES
-	cp -dpfr $(STAGING_DIR)/usr/lib/qt/examples/quick/ $(TARGET_DIR)/usr/lib/qt/examples/
-endef
-endif
-
-define QT5DECLARATIVE_INSTALL_TARGET_LIBS
-	cp -dpf $(STAGING_DIR)/usr/lib/libQt5Qml*.so.* $(TARGET_DIR)/usr/lib
-	cp -dpfr $(STAGING_DIR)/usr/lib/qt/plugins/qml* $(TARGET_DIR)/usr/lib/qt/plugins
-	$(QT5DECLARATIVE_INSTALL_TARGET_QUICK_LIBS)
-endef
-
-endif
-
-ifeq ($(BR2_PACKAGE_QT5BASE_EXAMPLES),y)
-define QT5DECLARATIVE_INSTALL_TARGET_EXAMPLES
-	cp -dpfr $(STAGING_DIR)/usr/lib/qt/examples/qml* $(TARGET_DIR)/usr/lib/qt/examples/
-	$(QT5DECLARATIVE_INSTALL_TARGET_QUICK_EXAMPLES)
-endef
-endif
-
 define QT5DECLARATIVE_INSTALL_TARGET_CMDS
-	cp -dpf $(STAGING_DIR)/usr/bin/qml* $(TARGET_DIR)/usr/bin
-	cp -dpfr $(STAGING_DIR)/usr/qml $(TARGET_DIR)/usr
-	$(QT5DECLARATIVE_INSTALL_TARGET_EXAMPLES)
-	$(QT5DECLARATIVE_INSTALL_TARGET_LIBS)
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) INSTALL_ROOT=$(TARGET_DIR) install
 endef
 
 $(eval $(generic-package))

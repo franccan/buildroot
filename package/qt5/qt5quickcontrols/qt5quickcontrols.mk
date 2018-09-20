@@ -24,37 +24,15 @@ endef
 
 define QT5QUICKCONTROLS_BUILD_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)
+	$(call QT5_FIXUP_MAKEFILES,$(@D))
 endef
 
 define QT5QUICKCONTROLS_INSTALL_STAGING_CMDS
-	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) install
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) INSTALL_ROOT=$(STAGING_DIR) install
 endef
-
-ifeq ($(BR2_PACKAGE_QT5BASE_EXAMPLES),y)
-define QT5QUICKCONTROLS_INSTALL_TARGET_EXAMPLES
-	cp -dpfr $(STAGING_DIR)/usr/lib/qt/examples/quickcontrols $(TARGET_DIR)/usr/lib/qt/examples/
-endef
-endif
-
-ifeq ($(BR2_PACKAGE_QT5DECLARATIVE_QUICK)$(BR2_PACKAGE_QT5BASE_WIDGETS),yy)
-define QT5QUICKCONTROLS_INSTALL_TARGET_PRIVATEWIDGETS
-	cp -dpfr $(STAGING_DIR)/usr/qml/QtQuick/PrivateWidgets $(TARGET_DIR)/usr/qml/QtQuick
-endef
-endif
-
-ifeq ($(BR2_PACKAGE_QT5_VERSION_5_6),y)
-define QT5QUICKCONTROLS_INSTALL_TARGET_LAYOUTS
-	cp -dpfr $(STAGING_DIR)/usr/qml/QtQuick/Layouts $(TARGET_DIR)/usr/qml/QtQuick
-endef
-endif
 
 define QT5QUICKCONTROLS_INSTALL_TARGET_CMDS
-	cp -dpfr $(STAGING_DIR)/usr/qml/QtQuick/Controls $(TARGET_DIR)/usr/qml/QtQuick
-	cp -dpfr $(STAGING_DIR)/usr/qml/QtQuick/Dialogs $(TARGET_DIR)/usr/qml/QtQuick
-	cp -dpfr $(STAGING_DIR)/usr/qml/QtQuick/Extras $(TARGET_DIR)/usr/qml/QtQuick
-	$(QT5QUICKCONTROLS_INSTALL_TARGET_PRIVATEWIDGETS)
-	$(QT5QUICKCONTROLS_INSTALL_TARGET_LAYOUTS)
-	$(QT5QUICKCONTROLS_INSTALL_TARGET_EXAMPLES)
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) INSTALL_ROOT=$(TARGET_DIR) install
 endef
 
 $(eval $(generic-package))

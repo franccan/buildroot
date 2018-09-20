@@ -32,23 +32,15 @@ endef
 
 define QT5WEBKIT_EXAMPLES_BUILD_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)
+	$(call QT5_FIXUP_MAKEFILES,$(@D))
 endef
 
 define QT5WEBKIT_EXAMPLES_INSTALL_STAGING_CMDS
-	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) install
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) INSTALL_ROOT=$(STAGING_DIR) install
 endef
-
-ifeq ($(BR2_PACKAGE_QT5DECLARATIVE),y)
-QT5WEBKIT_EXAMPLES_DEPENDENCIES += qt5declarative
-define QT5WEBKIT_EXAMPLES_INSTALL_QML
-	cp -dpfr $(@D)/examples/webkitqml $(TARGET_DIR)/usr/lib/qt/examples
-endef
-endif
 
 define QT5WEBKIT_EXAMPLES_INSTALL_TARGET_CMDS
-	mkdir -p $(TARGET_DIR)/usr/lib/qt/examples
-	cp -dpfr $(@D)/examples/webkitwidgets $(TARGET_DIR)/usr/lib/qt/examples
-	$(QT5WEBKIT_EXAMPLES_INSTALL_QML)
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) INSTALL_ROOT=$(TARGET_DIR) install
 endef
 
 $(eval $(generic-package))

@@ -19,34 +19,16 @@ endef
 
 define QT5SERIALBUS_BUILD_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)
+	$(call QT5_FIXUP_MAKEFILES,$(@D))
 endef
 
 define QT5SERIALBUS_INSTALL_STAGING_CMDS
-	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) install
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) INSTALL_ROOT=$(STAGING_DIR) install
 	$(QT5_LA_PRL_FILES_FIXUP)
 endef
 
-ifeq ($(BR2_STATIC_LIBS),)
-define QT5SERIALBUS_INSTALL_TARGET_LIBS
-	cp -dpf $(STAGING_DIR)/usr/lib/libQt5SerialBus.so.* \
-		$(TARGET_DIR)/usr/lib
-	mkdir -p $(TARGET_DIR)/usr/lib/qt/plugins/canbus
-	cp -dpf $(STAGING_DIR)/usr/lib/qt/plugins/canbus/*.so \
-		$(TARGET_DIR)/usr/lib/qt/plugins/canbus
-endef
-endif
-
-ifeq ($(BR2_PACKAGE_QT5BASE_EXAMPLES)$(BR2_PACKAGE_QT5BASE_WIDGETS),yy)
-define QT5SERIALBUS_INSTALL_TARGET_EXAMPLES
-	cp -dpfr $(STAGING_DIR)/usr/lib/qt/examples/serialbus $(TARGET_DIR)/usr/lib/qt/examples/
-endef
-endif
-
 define QT5SERIALBUS_INSTALL_TARGET_CMDS
-	$(QT5SERIALBUS_INSTALL_TARGET_LIBS)
-	$(QT5SERIALBUS_INSTALL_TARGET_EXAMPLES)
-	$(INSTALL) -m 0755 -D $(@D)/bin/canbusutil \
-		$(TARGET_DIR)/usr/bin/canbusutil
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) INSTALL_ROOT=$(TARGET_DIR) install
 endef
 
 $(eval $(generic-package))

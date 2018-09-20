@@ -24,28 +24,16 @@ endef
 
 define QT5SERIALPORT_BUILD_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)
+	$(call QT5_FIXUP_MAKEFILES,$(@D))
 endef
 
 define QT5SERIALPORT_INSTALL_STAGING_CMDS
-	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) install
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) INSTALL_ROOT=$(STAGING_DIR) install
 	$(QT5_LA_PRL_FILES_FIXUP)
 endef
 
-ifeq ($(BR2_STATIC_LIBS),)
-define QT5SERIALPORT_INSTALL_TARGET_LIBS
-	cp -dpf $(STAGING_DIR)/usr/lib/libQt5SerialPort.so.* $(TARGET_DIR)/usr/lib
-endef
-endif
-
-ifeq ($(BR2_PACKAGE_QT5BASE_EXAMPLES),y)
-define QT5SERIALPORT_INSTALL_TARGET_EXAMPLES
-	cp -dpfr $(STAGING_DIR)/usr/lib/qt/examples/serialport $(TARGET_DIR)/usr/lib/qt/examples/
-endef
-endif
-
 define QT5SERIALPORT_INSTALL_TARGET_CMDS
-	$(QT5SERIALPORT_INSTALL_TARGET_LIBS)
-	$(QT5SERIALPORT_INSTALL_TARGET_EXAMPLES)
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) INSTALL_ROOT=$(TARGET_DIR) install
 endef
 
 $(eval $(generic-package))

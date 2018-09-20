@@ -40,46 +40,16 @@ endef
 
 define QT5MULTIMEDIA_BUILD_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)
+	$(call QT5_FIXUP_MAKEFILES,$(@D))
 endef
 
 define QT5MULTIMEDIA_INSTALL_STAGING_CMDS
-	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) install
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) INSTALL_ROOT=$(STAGING_DIR) install
 	$(QT5_LA_PRL_FILES_FIXUP)
 endef
 
-ifeq ($(BR2_STATIC_LIBS),)
-# since Qt5.10.1 libqgsttools was renamed to libQtMultimediaGstTools
-# and is installed by the default target install step below
-ifeq ($(BR2_PACKAGE_QT5_VERSION_LATEST)x$(BR2_PACKAGE_GST1_PLUGINS_BASE),xy)
-define QT5MULTIMEDIA_INSTALL_TARGET_QGSTTOOLS_LIB
-	cp -dpf $(STAGING_DIR)/usr/lib/libqgsttools*.so.* $(TARGET_DIR)/usr/lib
-endef
-endif
-
-define QT5MULTIMEDIA_INSTALL_TARGET_LIBS
-	cp -dpf $(STAGING_DIR)/usr/lib/libQt5Multimedia*.so.* $(TARGET_DIR)/usr/lib
-	cp -dpfr $(STAGING_DIR)/usr/lib/qt/plugins/* $(TARGET_DIR)/usr/lib/qt/plugins
-	$(QT5MULTIMEDIA_INSTALL_TARGET_QGSTTOOLS_LIB)
-endef
-endif # !BR2_STATIC_LIBS
-
-# this is only built with quick/opengl support enabled
-ifeq ($(BR2_PACKAGE_QT5DECLARATIVE_QUICK)$(BR2_PACKAGE_QT5_GL_AVAILABLE),yy)
-define QT5MULTIMEDIA_INSTALL_TARGET_QMLS
-	cp -dpfr $(STAGING_DIR)/usr/qml/QtMultimedia $(TARGET_DIR)/usr/qml/
-endef
-endif
-
-ifeq ($(BR2_PACKAGE_QT5BASE_EXAMPLES),y)
-define QT5MULTIMEDIA_INSTALL_TARGET_EXAMPLES
-	cp -dpfr $(STAGING_DIR)/usr/lib/qt/examples/multimedia* $(TARGET_DIR)/usr/lib/qt/examples/
-endef
-endif
-
 define QT5MULTIMEDIA_INSTALL_TARGET_CMDS
-	$(QT5MULTIMEDIA_INSTALL_TARGET_LIBS)
-	$(QT5MULTIMEDIA_INSTALL_TARGET_QMLS)
-	$(QT5MULTIMEDIA_INSTALL_TARGET_EXAMPLES)
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) INSTALL_ROOT=$(TARGET_DIR) install
 endef
 
 $(eval $(generic-package))

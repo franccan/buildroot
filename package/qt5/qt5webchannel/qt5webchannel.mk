@@ -31,48 +31,16 @@ endef
 
 define QT5WEBCHANNEL_BUILD_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)
+	$(call QT5_FIXUP_MAKEFILES,$(@D))
 endef
 
 define QT5WEBCHANNEL_INSTALL_STAGING_CMDS
-	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) install
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) INSTALL_ROOT=$(STAGING_DIR) install
 	$(QT5_LA_PRL_FILES_FIXUP)
 endef
 
-ifeq ($(BR2_PACKAGE_QT5_VERSION_LATEST),y)
-define QT5WEBCHANNEL_INSTALL_TARGET_JAVASCRIPT
-	$(INSTALL) -m 0644 -D $(@D)/examples/webchannel/shared/qwebchannel.js \
-		$(TARGET_DIR)/var/www/qwebchannel.js
-endef
-else
-define QT5WEBCHANNEL_INSTALL_TARGET_JAVASCRIPT
-	$(INSTALL) -m 0644 -D $(@D)/src/webchannel/qwebchannel.js \
-		$(TARGET_DIR)/var/www/qwebchannel.js
-endef
-endif
-
-ifeq ($(BR2_PACKAGE_QT5DECLARATIVE_QUICK),y)
-define QT5WEBCHANNEL_INSTALL_TARGET_QMLS
-	cp -dpfr $(STAGING_DIR)/usr/qml/QtWebChannel $(TARGET_DIR)/usr/qml/
-endef
-endif
-
-ifeq ($(BR2_PACKAGE_QT5BASE_EXAMPLES),y)
-define QT5WEBCHANNEL_INSTALL_TARGET_EXAMPLES
-	cp -dpfr $(STAGING_DIR)/usr/lib/qt/examples/webchannel $(TARGET_DIR)/usr/lib/qt/examples/
-endef
-endif
-
-ifneq ($(BR2_STATIC_LIBS),y)
-define QT5WEBCHANNEL_INSTALL_TARGET_LIBS
-	cp -dpf $(STAGING_DIR)/usr/lib/libQt5WebChannel.so.* $(TARGET_DIR)/usr/lib
-endef
-endif
-
 define QT5WEBCHANNEL_INSTALL_TARGET_CMDS
-	$(QT5WEBCHANNEL_INSTALL_TARGET_LIBS)
-	$(QT5WEBCHANNEL_INSTALL_TARGET_QMLS)
-	$(QT5WEBCHANNEL_INSTALL_TARGET_JAVASCRIPT)
-	$(QT5WEBCHANNEL_INSTALL_TARGET_EXAMPLES)
+	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) INSTALL_ROOT=$(TARGET_DIR) install
 endef
 
 $(eval $(generic-package))
