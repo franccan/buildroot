@@ -1,13 +1,9 @@
-comment "ti-sgx-um needs the ti-sgx-km driver"
-	depends on !BR2_PACKAGE_TI_SGX_KM
-
 comment "ti-sgx-um needs udev /dev management and a glibc toolchain w/ threads"
 	depends on !BR2_TOOLCHAIN_USES_GLIBC || !BR2_TOOLCHAIN_HAS_THREADS \
 		|| !BR2_PACKAGE_HAS_UDEV
 
 config BR2_PACKAGE_TI_SGX_UM
 	bool "ti-sgx-um"
-	depends on BR2_PACKAGE_TI_SGX_KM
 	depends on BR2_TOOLCHAIN_HAS_THREADS # libdrm
 	# pre-built binaries
 	depends on BR2_TOOLCHAIN_USES_GLIBC
