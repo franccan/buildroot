@@ -1,0 +1,46 @@
+From 86bd50d00964936b3aed6b59a577c14c08f8d53f Mon Sep 17 00:00:00 2001
+From: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+Date: Tue, 30 Oct 2018 21:38:35 +0100
+Subject: [PATCH] Include <gbm.h> before <EGL/egl.h>
+
+Some EGL implementations (Mali) look at symbols defined by gbm.h to
+know if the backend is gbm or x11, etc. So let's include gbm.h to make
+EGL/egl.h happy.
+
+Signed-off-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+---
+ common.h | 2 +-
+ esUtil.h | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/common.h b/common.h
+index df07b61..aba6fe5 100644
+--- a/common.h
++++ b/common.h
+@@ -26,10 +26,10 @@
+ 
+ #include <GLES2/gl2.h>
+ #include <GLES2/gl2ext.h>
++#include <gbm.h>
+ #include <EGL/egl.h>
+ #include <EGL/eglext.h>
+ 
+-#include <gbm.h>
+ #include <drm_fourcc.h>
+ 
+ #ifndef EGL_KHR_platform_gbm
+diff --git a/esUtil.h b/esUtil.h
+index c2d7c1d..081148d 100644
+--- a/esUtil.h
++++ b/esUtil.h
+@@ -43,6 +43,7 @@
+ //  Includes
+ //
+ #include <GLES2/gl2.h>
++#include <gbm.h>
+ #include <EGL/egl.h>
+ 
+ #ifdef __cplusplus
+-- 
+2.14.4
+
