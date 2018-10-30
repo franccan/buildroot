@@ -12,6 +12,6 @@ TI_SGX_LIBGBM_AUTORECONF = YES
 TI_SGX_LIBGBM_LICENSE = MIT
 TI_SGX_LIBGBM_LICENSE_FILES = debian/copyright
 TI_SGX_LIBGBM_PROVIDES = libgbm
-TI_SGX_LIBGBM_DEPENDENCIES = wayland libdrm udev
+TI_SGX_LIBGBM_DEPENDENCIES = libdrm udev
 
 $(eval $(autotools-package))

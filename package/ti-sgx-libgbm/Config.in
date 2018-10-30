@@ -3,7 +3,6 @@ config BR2_PACKAGE_TI_SGX_LIBGBM
 	depends on BR2_PACKAGE_HAS_UDEV
 	depends on BR2_TOOLCHAIN_HAS_THREADS # libdrm
 	select BR2_PACKAGE_LIBDRM
-	select BR2_PACKAGE_WAYLAND
 	select BR2_PACKAGE_HAS_LIBGBM
 	help
 	  This package provides libgbm.so.2 for the
