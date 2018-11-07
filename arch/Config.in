@@ -15,6 +15,10 @@ config BR2_ARCH_HAS_MMU_MANDATORY
 config BR2_ARCH_HAS_MMU_OPTIONAL
 	bool
 
+config BR2_ARCH_SUPPORTS_SHARED
+	bool
+	default y
+
 choice
 	prompt "Target Architecture"
 	default BR2_i386
@@ -405,6 +409,10 @@ endif
 
 if BR2_csky
 source "arch/Config.in.csky"
+endif
+
+if BR2_k1
+source "arch/Config.in.k1"
 endif
 
 if BR2_m68k
