@@ -48,6 +48,7 @@ choice
 	prompt "GDB debugger Version"
 	default BR2_GDB_VERSION_8_1
 	depends on !BR2_arc
+	depends on !BR2_k1
 	help
 	  Select the version of gdb you wish to use.
 
@@ -95,6 +96,7 @@ config BR2_PACKAGE_GDB_NEEDS_CXX11
 config BR2_GDB_VERSION
 	string
 	default "arc-2018.09-release-gdb" if BR2_arc
+	default "9dda318f203f85c422d0ae049899381b5c409f2a" if BR2_k1
 	default "7.12.1"   if BR2_GDB_VERSION_7_12
 	default "8.0.1"    if BR2_GDB_VERSION_8_0
 	default "8.1.1"    if BR2_GDB_VERSION_8_1 || !BR2_PACKAGE_HOST_GDB

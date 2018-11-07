@@ -1,0 +1,18 @@
+choice
+	prompt "Target Architecture Variant"
+	help
+	  Specific CPU variant to use
+
+config BR2_k1_coolidge
+	bool "coolidge"
+
+endchoice
+
+config BR2_ARCH
+	default "k1"
+
+config BR2_ENDIAN
+	default "LITTLE"
+
+config BR2_READELF_ARCH_NAME
+	default "Kalray-1 Processor"

@@ -3,6 +3,7 @@ comment "GCC Options"
 choice
 	prompt "GCC compiler Version"
 	default BR2_GCC_VERSION_ARC if BR2_arc
+	default BR2_GCC_VERSION_K1 if BR2_k1
 	default BR2_GCC_VERSION_OR1K if BR2_or1k
 	default BR2_GCC_VERSION_7_X
 	help
@@ -13,6 +14,12 @@ config BR2_GCC_VERSION_ARC
 	# Only supported architecture
 	depends on BR2_arc
 	select BR2_TOOLCHAIN_GCC_AT_LEAST_8
+
+config BR2_GCC_VERSION_K1
+	bool "gcc k1 (7.x)"
+	# Only supported architecture
+	depends on BR2_k1
+	select BR2_TOOLCHAIN_GCC_AT_LEAST_7
 
 config BR2_GCC_VERSION_OR1K
 	bool "gcc or1k (5.x)"
@@ -26,6 +33,7 @@ config BR2_GCC_VERSION_4_9_X
 	# Broken or unsupported architectures
 	depends on !BR2_arc
 	depends on !BR2_or1k
+	depends on !BR2_k1
 	# musl on microblaze, ppc64 and mips64 unsupported
 	depends on !(BR2_TOOLCHAIN_USES_MUSL && (BR2_microblazeel || BR2_microblazebe))
 	depends on !(BR2_TOOLCHAIN_USES_MUSL && (BR2_powerpc64 || BR2_powerpc64le))
@@ -42,6 +50,7 @@ config BR2_GCC_VERSION_5_X
 	# Broken or unsupported architectures
 	depends on !BR2_arc
 	depends on !BR2_or1k
+	depends on !BR2_k1
 	# musl on ppc64 and mips64 unsupported
 	depends on !(BR2_TOOLCHAIN_USES_MUSL && (BR2_powerpc64 || BR2_powerpc64le))
 	depends on !(BR2_TOOLCHAIN_USES_MUSL && (BR2_mips64 || BR2_mips64el))
@@ -55,6 +64,7 @@ config BR2_GCC_VERSION_6_X
 	# Broken or unsupported architectures
 	depends on !BR2_arc
 	depends on !BR2_or1k
+	depends on !BR2_k1
 	select BR2_TOOLCHAIN_GCC_AT_LEAST_6
 
 config BR2_GCC_VERSION_7_X
@@ -62,12 +72,14 @@ config BR2_GCC_VERSION_7_X
 	depends on !BR2_ARCH_NEEDS_GCC_AT_LEAST_8
 	# Broken or unsupported architectures
 	depends on !BR2_or1k
+	depends on !BR2_k1
 	select BR2_TOOLCHAIN_GCC_AT_LEAST_7
 
 config BR2_GCC_VERSION_8_X
 	bool "gcc 8.x"
 	# Broken or unsupported architectures
 	depends on !BR2_or1k
+	depends on !BR2_k1
 	select BR2_TOOLCHAIN_GCC_AT_LEAST_8
 
 endchoice
@@ -86,6 +98,7 @@ config BR2_GCC_VERSION
 	default "7.4.0"     if BR2_GCC_VERSION_7_X
 	default "8.3.0"     if BR2_GCC_VERSION_8_X
 	default "arc-2018.09-release" if BR2_GCC_VERSION_ARC
+	default "55babd5599ba09d3097b03df8c3b3c005f22565c" if BR2_GCC_VERSION_K1
 	default "or1k-musl-5.4.0-20170218" if BR2_GCC_VERSION_OR1K
 
 config BR2_EXTRA_GCC_CONFIG_OPTIONS

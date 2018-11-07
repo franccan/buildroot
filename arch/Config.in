@@ -18,6 +18,7 @@ config BR2_ARCH_HAS_MMU_OPTIONAL
 config BR2_ARCH_SUPPORTS_SHARED
 	bool
 	default y
+	depends on !BR2_k1
 
 choice
 	prompt "Target Architecture"
@@ -94,6 +95,13 @@ config BR2_i386
 	help
 	  Intel i386 architecture compatible microprocessor
 	  http://en.wikipedia.org/wiki/I386
+
+config BR2_k1
+	bool "k1"
+	select BR2_ARCH_HAS_MMU_MANDATORY
+	help
+	  Kalray MPPA architecture support.
+	  https://www.kalrayinc.com/portfolio/processors/
 
 config BR2_m68k
 	bool "m68k"

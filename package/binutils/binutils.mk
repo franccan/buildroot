@@ -10,6 +10,8 @@ BINUTILS_VERSION = $(call qstrip,$(BR2_BINUTILS_VERSION))
 ifeq ($(BINUTILS_VERSION),)
 ifeq ($(BR2_arc),y)
 BINUTILS_VERSION = arc-2018.09-release
+else ifeq ($(BR2_k1),y)
+BINUTILS_VERSION = 9dda318f203f85c422d0ae049899381b5c409f2a
 else
 BINUTILS_VERSION = 2.29.1
 endif
@@ -18,6 +20,10 @@ endif # BINUTILS_VERSION
 ifeq ($(BINUTILS_VERSION),arc-2018.09-release)
 BINUTILS_SITE = $(call github,foss-for-synopsys-dwc-arc-processors,binutils-gdb,$(BINUTILS_VERSION))
 BINUTILS_SOURCE = binutils-gdb-$(BINUTILS_VERSION).tar.gz
+BINUTILS_FROM_GIT = y
+else ifeq ($(BR2_k1),y)
+BINUTILS_SITE = $(call github,kalray,gdb-binutils,$(BINUTILS_VERSION))
+BINUTILS_SOURCE = binutils-$(BINUTILS_VERSION).tar.gz
 BINUTILS_FROM_GIT = y
 endif
 BINUTILS_SITE ?= $(BR2_GNU_MIRROR)/binutils
