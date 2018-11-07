@@ -8,3 +8,6 @@ sha512  3840770da5ede0248f6a6605e3f1743210acd9f4da7de48720ef566cc2aae52ea9e84c28
 
 # Locally calculated (fetched from https://github.com/c-sky/binutils-gdb)
 sha512  979552d4b3a4f31e9f3b9a7027321bd4eb3ac6c2d8deac1720e94e54f81d736db09c53c5d87c301010e307b64127e14400a036c7a35e5d63a954a4edd9cc8e2c  binutils-c66d8bbcebfddf713b2b436e1b135e6b125a55a5.tar.gz
+
+# Locally calculated (fetched from Github)
+sha512  8568e9d9f8870a3ea32f26080735a974084fd914f631239d6743f954534a644b2a4ae749117e7bdfd8d98bfe618c8c3b172101d1f5a567e3c637b9674e82e394  binutils-0dd69706ee176f787cc658d7ee6664dfda768649.tar.gz

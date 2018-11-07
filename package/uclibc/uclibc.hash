@@ -2,3 +2,4 @@
 sha256  891b5e4573855e4c11e51d3a518f89a82e490d9aa73280c05ce3e4d7e739a370  uClibc-ng-1.0.32.tar.xz
 # Locally calculated
 sha256  6095e9ffa777dd22839f7801aa845b31c9ed07f3d6bf8a26dc5d2dec8ccc0ef3  COPYING.LIB
+sha256  8673bfbe68ae62c54ed0a7a57ce6e0f5c31625d99fbb2e2d9d0d9e95f5eb3cb7  uclibc-20c027c5f7f27e9dbbad9327750a12f532fc6e07.tar.gz

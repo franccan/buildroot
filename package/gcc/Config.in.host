@@ -4,6 +4,7 @@ choice
 	prompt "GCC compiler Version"
 	default BR2_GCC_VERSION_ARC if BR2_arc
 	default BR2_GCC_VERSION_CSKY if BR2_csky
+	default BR2_GCC_VERSION_K1 if BR2_k1
 	default BR2_GCC_VERSION_OR1K if BR2_or1k
 	default BR2_GCC_VERSION_8_X
 	help
@@ -21,6 +22,12 @@ config BR2_GCC_VERSION_CSKY
 	depends on BR2_csky
 	select BR2_TOOLCHAIN_GCC_AT_LEAST_6
 
+config BR2_GCC_VERSION_K1
+	bool "gcc k1 (7.x)"
+	# Only supported architecture
+	depends on BR2_k1
+	select BR2_TOOLCHAIN_GCC_AT_LEAST_7
+
 config BR2_GCC_VERSION_OR1K
 	bool "gcc or1k (5.x)"
 	# Only supported architecture
@@ -33,6 +40,7 @@ config BR2_GCC_VERSION_5_X
 	# Broken or unsupported architectures
 	depends on !BR2_arc
 	depends on !BR2_or1k
+	depends on !BR2_k1
 	# musl on ppc64 and mips64 unsupported
 	depends on !(BR2_TOOLCHAIN_USES_MUSL && (BR2_powerpc64 || BR2_powerpc64le))
 	depends on !(BR2_TOOLCHAIN_USES_MUSL && (BR2_mips64 || BR2_mips64el))
@@ -45,6 +53,7 @@ config BR2_GCC_VERSION_7_X
 	depends on !BR2_ARCH_NEEDS_GCC_AT_LEAST_8
 	# Broken or unsupported architectures
 	depends on !BR2_or1k
+	depends on !BR2_k1
 	select BR2_TOOLCHAIN_GCC_AT_LEAST_7
 
 config BR2_GCC_VERSION_8_X
@@ -55,6 +64,7 @@ config BR2_GCC_VERSION_8_X
 	# powerpc spe support has been deprecated since gcc 8.x.
 	# https://gcc.gnu.org/ml/gcc/2018-04/msg00102.html
 	depends on !BR2_powerpc_SPE
+	depends on !BR2_k1
 	select BR2_TOOLCHAIN_GCC_AT_LEAST_8
 
 config BR2_GCC_VERSION_9_X
@@ -68,6 +78,7 @@ config BR2_GCC_VERSION_9_X
 	# C-SKY sk610 needs abiv1, which is not supported in
 	# upstream gcc
 	depends on !BR2_ck610
+	depends on !BR2_k1
 	select BR2_TOOLCHAIN_GCC_AT_LEAST_9
 
 endchoice
@@ -97,6 +108,7 @@ config BR2_GCC_VERSION
 	default "8.3.0"     if BR2_GCC_VERSION_8_X
 	default "9.2.0"     if BR2_GCC_VERSION_9_X
 	default "arc-2019.09-rc1" if BR2_GCC_VERSION_ARC
+	default "54a10b30813f7ca24a3f287f696baddbe18fcc4c" if BR2_GCC_VERSION_K1
 	default "or1k-musl-5.4.0-20170218" if BR2_GCC_VERSION_OR1K
 	default "48152afb96c59733d5bc79e3399bb7b3d4b44266" if BR2_GCC_VERSION_CSKY
 

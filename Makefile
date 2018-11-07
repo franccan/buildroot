@@ -437,6 +437,7 @@ KERNEL_ARCH := $(shell echo "$(ARCH)" | sed -e "s/-.*//" \
 	-e s/arceb/arc/ \
 	-e s/arm.*/arm/ -e s/sa110/arm/ \
 	-e s/aarch64.*/arm64/ \
+	-e s/k1/k1c/ \
 	-e s/nds32.*/nds32/ \
 	-e s/or1k/openrisc/ \
 	-e s/parisc64/parisc/ \
