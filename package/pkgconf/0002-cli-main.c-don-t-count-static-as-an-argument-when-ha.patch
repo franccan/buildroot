@@ -1,0 +1,49 @@
+From f7a58c164ab1d2dc296ce47ab238ed1ea39cb559 Mon Sep 17 00:00:00 2001
+From: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+Date: Thu, 27 Dec 2018 14:50:38 +0100
+Subject: [PATCH] cli/main.c: don't count --static as an argument when handling
+ --version
+
+In commit 12a0eb124cea85586e57f33c91a1e4c73459eef6 ("main: assume
+--modversion insted of --version if other flags or module names are
+provided"), the handling of the --version option was changed so that
+if any other option than --version is passed, pkg-config assumes the
+user wanted to use --modversion.
+
+This breaks the use case where "pkg-config --static --version" is
+passed, a situation where we really want the normal --version
+behavior.
+
+This issue has been reported upstream at
+https://git.dereferenced.org/pkgconf/pkgconf/issues/19, but until a
+resolution is found, let's not count the --static option in the count
+of options that trigger this "the user wanted --modversion" behavior.
+
+Signed-off-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+---
+ cli/main.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/cli/main.c b/cli/main.c
+index b52cc85..8f6c4c9 100644
+--- a/cli/main.c
++++ b/cli/main.c
+@@ -955,7 +955,14 @@ main(int argc, char *argv[])
+ 
+ 	if ((want_flags & PKG_VERSION) == PKG_VERSION)
+ 	{
+-		if (argc > 2)
++		int nargs = argc;
++
++		/* Don't count --static as an argument for the
++		 * following test */
++		if ((want_flags & PKG_STATIC) == PKG_STATIC)
++			nargs--;
++
++		if (nargs > 2)
+ 		{
+ 			fprintf(stderr, "%s: --version specified with other options or module names, assuming --modversion.\n", argv[0]);
+ 
+-- 
+2.20.1
+
