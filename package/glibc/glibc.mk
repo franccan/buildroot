@@ -112,7 +112,6 @@ define GLIBC_CONFIGURE_CMDS
 		$(SHELL) $(@D)/configure \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
-		--build=$(GNU_HOST_NAME) \
 		--prefix=/usr \
 		--enable-shared \
 		$(if $(BR2_x86_64),--enable-lock-elision) \

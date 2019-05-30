@@ -186,7 +186,6 @@ define $(2)_CONFIGURE_CMDS
 	./configure \
 		--target=$$(GNU_TARGET_NAME) \
 		--host=$$(GNU_TARGET_NAME) \
-		--build=$$(GNU_HOST_NAME) \
 		--prefix=/usr \
 		--exec-prefix=/usr \
 		--sysconfdir=/etc \

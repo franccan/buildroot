@@ -53,7 +53,6 @@ define JIMTCL_CONFIGURE_CMDS
 		$(if $(BR2_INSTALL_LIBSTDCPP),,CXX=false) \
 		./configure --prefix=/usr \
 		--host=$(GNU_TARGET_NAME) \
-		--build=$(GNU_HOST_NAME) \
 		$(JIMTCL_SHARED) \
 	)
 endef
