@@ -422,7 +422,8 @@ unexport GCC_COLORS
 unexport PLATFORM
 unexport OS
 
-GNU_HOST_NAME := $(shell support/gnuconfig/config.guess)
+# any package using this variable must depend on host-gnuconfig
+GNU_HOST_NAME = $(shell $(HOST_DIR)/usr/share/gnuconfig/config.guess)
 
 PACKAGES :=
 PACKAGES_ALL :=
