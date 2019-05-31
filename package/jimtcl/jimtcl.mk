@@ -42,7 +42,8 @@ endif
 # gnuconfig which doesn't know all the architectures supported by
 # Buildroot, so update config.guess / config.sub like we do in
 # pkg-autotools.mk
-JIMTCL_POST_PATCH_HOOKS += UPDATE_CONFIG_HOOK
+JIMTCL_DEPENDENCIES += host-gnuconfig
+JIMTCL_PRE_CONFIGURE_HOOKS += UPDATE_CONFIG_HOOK
 
 # jimtcl really wants to find a existing $CXX, so feed it false
 # when we do not have one.

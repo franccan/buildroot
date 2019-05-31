@@ -33,7 +33,8 @@ PERL_POST_EXTRACT_HOOKS += PERL_CROSS_EXTRACT
 # config.guess. Up-to-date versions of these files may be needed to build perl
 # on newer host architectures, so we borrow the hook which updates them from the
 # autotools infrastructure.
-PERL_POST_PATCH_HOOKS += UPDATE_CONFIG_HOOK
+PERL_DEPENDENCIES += host-gnuconfig
+PERL_PRE_CONFIGURE_HOOKS += UPDATE_CONFIG_HOOK
 
 ifeq ($(BR2_PACKAGE_BERKELEYDB),y)
 PERL_DEPENDENCIES += berkeleydb

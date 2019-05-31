@@ -26,7 +26,8 @@ endif
 # an old version of gnuconfig which doesn't know all the architectures
 # supported by Buildroot, so update config.guess / config.sub like we
 # do in pkg-autotools.mk
-USB_MODESWITCH_POST_PATCH_HOOKS += UPDATE_CONFIG_HOOK
+USB_MODESWITCH_DEPENDENCIES += host-gnuconfig
+USB_MODESWITCH_PRE_CONFIGURE_HOOKS += UPDATE_CONFIG_HOOK
 
 define USB_MODESWITCH_BUILD_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) $(TARGET_CONFIGURE_OPTS) \

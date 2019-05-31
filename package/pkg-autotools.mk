@@ -31,7 +31,7 @@
 define CONFIG_UPDATE
 	for file in config.guess config.sub; do \
 		for i in $$(find $(1) -name $$file); do \
-			cp support/gnuconfig/$$file $$i; \
+			cp $(HOST_DIR)/usr/share/gnuconfig/$$file $$i; \
 		done; \
 	done
 endef
@@ -239,7 +239,10 @@ endef
 endif
 endif
 
-$(2)_POST_PATCH_HOOKS += UPDATE_CONFIG_HOOK
+ifneq ($(1),host-tar)
+$(2)_DEPENDENCIES += host-gnuconfig
+$(2)_PRE_CONFIGURE_HOOKS += UPDATE_CONFIG_HOOK
+endif
 
 ifeq ($$($(2)_AUTORECONF),YES)
 
