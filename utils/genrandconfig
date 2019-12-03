@@ -350,7 +350,7 @@ def gen_config(args):
     configlines.append("BR2_WGET=\"wget --passive-ftp -nd -t 3 --no-check-certificate\"\n")
 
     # Per-package folder
-    if randint(0, 15) == 0:
+    if randint(0, 15) == 0 or True:
         configlines.append("BR2_PER_PACKAGE_DIRECTORIES=y\n")
 
     # Amend the configuration with a few things.
