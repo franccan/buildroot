@@ -160,9 +160,13 @@ copy_toolchain_sysroot = \
 #
 # $1: sysroot directory
 # $2: kernel version string, in the form: X.Y
+# $3: test to do for the latest kernel version, 'strict' or 'loose'
+#     always 'strict' if this is not the latest version.
 #
 check_kernel_headers_version = \
-	if ! support/scripts/check-kernel-headers.sh $(1) $(2); then \
+	if ! support/scripts/check-kernel-headers.sh $(1) $(2) \
+		$(if $(BR2_TOOLCHAIN_HEADERS_LATEST),$(3),strict); \
+	then \
 		exit 1; \
 	fi
 
