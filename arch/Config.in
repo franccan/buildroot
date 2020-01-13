@@ -98,6 +98,7 @@ config BR2_i386
 
 config BR2_k1
 	bool "k1"
+	select BR2_ARCH_IS_64
 	select BR2_ARCH_HAS_MMU_MANDATORY
 	help
 	  Kalray MPPA architecture support.
