@@ -5,7 +5,7 @@
 ################################################################################
 
 ifeq ($(BR2_k1),y)
-UCLIBC_VERSION = 70f42ca46d7adcbaf19fa57cd7d65ba8f6d6356c
+UCLIBC_VERSION = 20c027c5f7f27e9dbbad9327750a12f532fc6e07
 UCLIBC_SITE = $(call github,kalray,uclibc-ng,$(UCLIBC_VERSION))
 else
 UCLIBC_VERSION = 1.0.31
