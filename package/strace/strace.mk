@@ -4,9 +4,21 @@
 #
 ################################################################################
 
+ifeq ($(BR2_k1),y)
+STRACE_VERSION = 278d3b88844202c4a16ae767e8d13ffc5d362bef
+STRACE_SITE = https://github.com/kalray/strace.git
+STRACE_SITE_METHOD = git
+STRACE_AUTORECONF = YES
+define STRACE_BOOTSTRAP_HOOK
+	$(SED) 's%^\(autoreconf.*\)%#\1%' $(@D)/bootstrap
+	(cd $(@D); ./bootstrap)
+endef
+STRACE_POST_PATCH_HOOKS += STRACE_BOOTSTRAP_HOOK
+else
 STRACE_VERSION = 5.3
 STRACE_SOURCE = strace-$(STRACE_VERSION).tar.xz
 STRACE_SITE = https://strace.io/files/$(STRACE_VERSION)
+endif
 STRACE_LICENSE = LGPL-2.1+
 STRACE_LICENSE_FILES = COPYING LGPL-2.1-or-later
 STRACE_CONF_OPTS = --enable-mpers=check
