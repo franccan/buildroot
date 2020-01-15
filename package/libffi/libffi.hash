@@ -1,4 +1,5 @@
 # Locally calculated
 sha256	db41cfb9ec8052fcd116a94c12237303c4447af4844d50e4fea7163661e31743  libffi-v3.3-rc0.tar.gz
+sha256  0902b51a0df4877661447c4e10a70556ccb97a10effc8ec82a646b75357d8353  libffi-eacb2cfddcab2a758b20b8b4da84af2166c3c2f9.tar.gz
 # License files, locally calculated
 sha256	0f4d7a0bfb83c37465d42dc305f124189196cc0cc2cc8d6f8461103682aebbc5  LICENSE
