@@ -119,7 +119,7 @@ choice
 	  requirements on the version of kernel headers.
 
 config BR2_PACKAGE_HOST_LINUX_HEADERS_CUSTOM_5_3
-	bool "5.3.x"
+	bool "5.3.x or later"
 	select BR2_TOOLCHAIN_HEADERS_AT_LEAST_5_3
 
 config BR2_PACKAGE_HOST_LINUX_HEADERS_CUSTOM_5_2
