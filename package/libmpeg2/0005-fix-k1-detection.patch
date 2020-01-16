@@ -1,0 +1,22 @@
+Fix detection of K1 architecture
+
+The k1-* tuple used by the K1 architecture would match the k?-* case,
+making libmpeg2 believe that K1 is an x86 processor.
+
+To fix this, we restrict the match on k5, k6, k7, k8 and k10, which
+are all existing AMD processors to date.
+
+Signed-off-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+Index: b/configure.ac
+===================================================================
+--- a/configure.ac
++++ b/configure.ac
+@@ -61,7 +61,7 @@
+     dnl arch-specific flags
+     arm_conditional=false
+     case "$host" in
+-    i?86-* | k?-* | x86_64-* | amd64-*)
++    i?86-* | k5-* | k6-* | k7-* | k8-* | k10-* | x86_64-* | amd64-*)
+ 	AC_DEFINE([ARCH_X86],,[x86 architecture])
+ 	case "$host" in
+ 	i386-*) TRY_CFLAGS="$OPT_CFLAGS -mcpu=i386";;
