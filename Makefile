@@ -742,7 +742,8 @@ ifeq ($(BR2_PER_PACKAGE_DIRECTORIES),y)
 		if test ! -f $${flist} ; then \
 			continue ; \
 		fi ; \
-		rsync -a --files-from=$${flist} \
+		echo "Copying files from $${pkgname}..." ; \
+		rsync -av --files-from=$${flist} \
 			--link-dest=$(PER_PACKAGE_DIR)/$${pkgname}/target \
 			$(PER_PACKAGE_DIR)/$${pkgname}/target \
 			$(TARGET_DIR) ; \

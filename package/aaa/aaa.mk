@@ -5,7 +5,8 @@
 ################################################################################
 
 define AAA_INSTALL_TARGET_CMDS
-	echo "pouet" > $(TARGET_DIR)/machin
+	rm -f $(TARGET_DIR)/machin
+	echo "chose4567" > $(TARGET_DIR)/machin
 endef
 
 $(eval $(generic-package))
