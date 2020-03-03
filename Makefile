@@ -735,7 +735,19 @@ staging-finalize: $(STAGING_DIR_SYMLINK)
 .PHONY: target-finalize
 target-finalize: $(PACKAGES) $(TARGET_DIR) host-finalize
 	@$(call MESSAGE,"Finalizing target directory")
-	$(call per-package-rsync,$(sort $(PACKAGES)),target,$(TARGET_DIR))
+ifeq ($(BR2_PER_PACKAGE_DIRECTORIES),y)
+	for p in $(foreach p,$(sort $(PACKAGES)),$(p):$($(call UPPERCASE,$(p))_BUILDDIR)/.files-list.rsync) ; do \
+		pkgname=`echo $${p} | cut -f1 -d':'` ; \
+		flist=`echo $${p} | cut -f2 -d':'` ; \
+		if test ! -f $${flist} ; then \
+			continue ; \
+		fi ; \
+		rsync -a --files-from=$${flist} \
+			--link-dest=$(PER_PACKAGE_DIR)/$${pkgname}/target \
+			$(PER_PACKAGE_DIR)/$${pkgname}/target \
+			$(TARGET_DIR) ; \
+	done
+endif
 	# Check files that are touched by more than one package
 	$(foreach hook,$(TARGET_FINALIZE_HOOKS),$($(hook))$(sep))
 	rm -rf $(TARGET_DIR)/usr/include $(TARGET_DIR)/usr/share/aclocal \
