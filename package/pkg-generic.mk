@@ -78,6 +78,11 @@ define step_pkg_size_after
 		$($(PKG)_BUILDDIR)/.files-list$(3).after \
 		| sed -r -e 's/^[^,]+/$(1)/' \
 		> $($(PKG)_BUILDDIR)/.files-list$(3).txt
+	LC_ALL=C comm -13 \
+		$($(PKG)_BUILDDIR)/.files-list$(3).before \
+		$($(PKG)_BUILDDIR)/.files-list$(3).after \
+		| sed -r -e 's/^[^,]+,//' \
+		> $($(PKG)_BUILDDIR)/.files-list$(3).rsync
 	rm -f $($(PKG)_BUILDDIR)/.files-list$(3).before
 	rm -f $($(PKG)_BUILDDIR)/.files-list$(3).after
 endef
