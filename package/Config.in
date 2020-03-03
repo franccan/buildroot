@@ -1,5 +1,8 @@
 menu "Target packages"
 
+	source "package/aaa/Config.in"
+	source "package/zzz/Config.in"
+
 	source "package/busybox/Config.in"
 	source "package/skeleton/Config.in"
 	source "package/skeleton-custom/Config.in"
