@@ -71,7 +71,7 @@ endef
 # $(3): suffix of file (optional)
 define step_pkg_size_after
 	cd $(2); \
-	LC_ALL=C find . \( -type f -o -type l \) -printf '%T@:%i:%#m:%y:%s,%p\n' \
+	LC_ALL=C find . \( -type f -o -type l -o -type d \) -printf '%T@:%i:%#m:%y:%s,%p\n' \
 		| LC_ALL=C sort > $($(PKG)_BUILDDIR)/.files-list$(3).after
 	LC_ALL=C comm -13 \
 		$($(PKG)_BUILDDIR)/.files-list$(3).before \
