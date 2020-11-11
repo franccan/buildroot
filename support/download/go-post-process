@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(dirname $0)/post-process-helpers
+
+# Parse our options
+while getopts "n:o:" OPT; do
+        case "${OPT}" in
+        o)  output="${OPTARG}";;
+        n)  base_name="${OPTARG}";;
+        :)  error "option '%s' expects a mandatory argument\n" "${OPTARG}";;
+        \?) error "unknown option '%s'\n" "${OPTARG}";;
+        esac
+done
+
+# Already vendored tarball, nothing to do
+if tar tf ${output} | grep -q "^[^/]*/vendor" ; then
+	exit 0
+fi
+
+unpack ${base_name} ${output}
+
+# Do the Go vendoring
+pushd ${base_name} > /dev/null
+
+# Generate go.mod if it doesn't exist
+if [ ! -f go.mod ] && [ -n "${BR_GOMOD}" ]; then
+	go mod init ${BR_GOMOD}
+fi
+
+go mod vendor -v -modcacherw
+popd > /dev/null
+
+repack ${base_name} ${output}

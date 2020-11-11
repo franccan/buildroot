@@ -42,12 +42,13 @@ define inner-golang-package
 
 $(2)_BUILD_OPTS += \
 	-ldflags "$$($(2)_LDFLAGS)" \
+	-modcacherw \
 	-tags "$$($(2)_TAGS)" \
 	-trimpath \
 	-p $(PARALLEL_JOBS)
 
 # Target packages need the Go compiler on the host.
-$(2)_DEPENDENCIES += host-go
+$(2)_DOWNLOAD_DEPENDENCIES += host-go
 
 $(2)_BUILD_TARGETS ?= .
 
@@ -72,14 +73,15 @@ $(2)_SRC_SOFTWARE = $$(word 2,$$(subst /, ,$$(call notdomain,$$($(2)_SITE))))
 # If the go.mod file does not exist, one is written with this root path.
 $(2)_GOMOD ?= $$($(2)_SRC_DOMAIN)/$$($(2)_SRC_VENDOR)/$$($(2)_SRC_SOFTWARE)
 
-# Generate a go.mod file if it doesn't exist. Note: Go is configured
-# to use the "vendor" dir and not make network calls.
-define $(2)_GEN_GOMOD
-	if [ ! -f $$(@D)/go.mod ]; then \
-		printf "module $$($(2)_GOMOD)\n" > $$(@D)/go.mod; \
-	fi
-endef
-$(2)_POST_PATCH_HOOKS += $(2)_GEN_GOMOD
+$(2)_DOWNLOAD_POST_PROCESS = go
+$(2)_DL_ENV = \
+	$(HOST_GO_COMMON_ENV) \
+	GOPROXY=direct \
+	BR_GOMOD=$$($(2)_GOMOD)
+
+# Due to vendoring, it is pretty likely that not all licenses are
+# listed in <pkg>_LICENSE.
+$(2)_LICENSE += , vendored dependencies licenses probably not listed
 
 # Build step. Only define it if not already defined by the package .mk
 # file.
