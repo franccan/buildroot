@@ -37,9 +37,16 @@
 define inner-cargo-package
 
 # We need host-rustc to run cargo
-$(2)_DEPENDENCIES += host-rustc
+$(2)_DOWNLOAD_DEPENDENCIES += host-rustc
 
 $(2)_CARGO_ENV += CARGO_HOME=$$(HOST_DIR)/share/cargo
+
+$(2)_DOWNLOAD_POST_PROCESS = cargo
+$(2)_DL_ENV = CARGO_HOME=$$(HOST_DIR)/share/cargo
+
+# Due to vendoring, it is pretty likely that not all licenses are
+# listed in <pkg>_LICENSE.
+$(2)_LICENSE += , vendored dependencies licenses probably not listed
 
 # Note: in all the steps below, we "cd" into the build directory to
 # execute the "cargo" tool instead of passing $(@D)/Cargo.toml as the
@@ -50,7 +57,9 @@ $(2)_CARGO_ENV += CARGO_HOME=$$(HOST_DIR)/share/cargo
 # directory, its configuration file will not be taken into account.
 #
 # Also, we pass:
-#  * --offline to prevent cargo from downloading anything
+#  * --offline to prevent cargo from downloading anything: all
+#    dependencies should have been built by the download post
+#    process logic
 #  * --locked to force cargo to use the Cargo.lock file, which ensures
 #    that a fixed set of dependency versions is used
 
