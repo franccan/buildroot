@@ -37,9 +37,12 @@
 define inner-cargo-package
 
 # We need host-rustc to run cargo
-$(2)_DEPENDENCIES += host-rustc
+$(2)_DOWNLOAD_DEPENDENCIES += host-rustc
 
 $(2)_CARGO_ENV += CARGO_HOME=$$(HOST_DIR)/share/cargo
+
+$(2)_DOWNLOAD_POST_PROCESS = cargo
+$(2)_DL_ENV = CARGO_HOME=$$(HOST_DIR)/share/cargo
 
 #
 # Build step. Only define it if not already defined by the package .mk
