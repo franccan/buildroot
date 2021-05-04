@@ -65,6 +65,9 @@ In addition, you may also use these environment variables:
   - +BUILD_DIR+: the directory where packages are extracted and built
   - +BINARIES_DIR+: the place where all binary files (aka images) are
     stored
+  - +CONFIG_DIR+: the directory containing the .config file, and
+    therefore the top-level Buildroot Makefile to use (which is
+    correct for both in-tree and out-of-tree builds)
   - +BASE_DIR+: the base output directory
 
 Below three more methods of customizing the target filesystem are
